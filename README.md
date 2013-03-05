@@ -18,7 +18,7 @@ fonzie install media-shortcuts
 @import "media-shortcut";
 ```
 
-```
+```scss
 selector {
     @include media-min-width(320px) {
         @include landscape {
