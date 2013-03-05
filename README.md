@@ -15,7 +15,7 @@ fonzie install media-shortcuts
 ## Usage
 
 ```scss
-@import "media-shortcut";
+@import "media-shortcuts";
 ```
 
 ```scss
