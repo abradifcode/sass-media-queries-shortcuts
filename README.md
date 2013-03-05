@@ -8,7 +8,9 @@ A bundle of differents Sass media-queries shortcuts.
 
 ## Installation
 
+```
 fonzie install media-shortcuts
+```
 
 ## Usage
 
@@ -23,7 +25,7 @@ selector {
             // your content
         }
     }
-    
+
     @include media-min-height(480px) {
         // some other rules
     }
