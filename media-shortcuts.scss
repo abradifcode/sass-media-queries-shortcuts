@@ -1,0 +1,176 @@
+//
+// Media queries shortcuts
+//
+
+// Wrapper for IE trick from http://jakearchibald.github.com/sass-ie/
+// disabled by default
+$media-queries-fix-width:  false !default;
+$media-queries-fix-height: false !default;
+
+@mixin media-fix($value, $prop: 'width', $query: 'min')
+{
+    $media-queries-fix: $media-queries-fix-width;
+    @if ($prop == 'height')
+    {
+        $media-queries-fix: $media-queries-fix-height;
+    }
+
+    // If we're outputting for a fixed media query set...
+    @if $media-queries-fix
+    {
+        // ...and if we should apply these rules
+        @if $query == 'min'
+        {
+            @if $media-queries-fix >= $value
+            {
+                @content;
+            }
+        }
+        @else
+        {
+            @if $query == 'max'
+            {
+                @if $media-queries-fix < $value
+                {
+                    @content;
+                }
+            }
+            @else
+            {
+                @warn "#{error("media-fix need a min or a max for $query")}";
+            }
+        }
+    }
+    @else
+    {
+        // Otherwise, output it using a regular media query
+        @media (#{$query}-#{$prop}: $value)
+        {
+            @content;
+        }
+    }
+}
+
+//
+// Media min, max & gap
+//
+@mixin media-min($min-size, $prop: 'width') {
+    @include media-fix($min-size, $prop) { @content; }
+}
+
+@mixin media-max($max-size, $prop: 'width') {
+    @include media-fix($max-size, $prop, 'max') { @content; }
+}
+
+@mixin media-gap($min-size, $max-size, $prop: 'width') {
+    @media (min-#{$prop}: $min-size) and (max-#{$prop}: $max-size) { @content; }
+}
+
+//
+// Media Queries for width
+//
+
+@mixin media-min-width($min-width) {
+    @include media-min($min-width) { @content; }
+}
+
+@mixin media-max-width($max-width) {
+    @include media-max($max-width) { @content; }
+}
+
+@mixin media-gap-width($min-width, $max-width) {
+    @include media-gap($min-width, $max-width) { @content; }
+}
+
+//
+// Media Queries for Height
+//
+
+@mixin media-min-height($min-height) {
+    @include media-min($min-height, 'height') { @content; }
+}
+
+@mixin media-max-height($max-height) {
+    @include media-max($max-height, 'height') { @content; }
+}
+
+@mixin media-gap-height($min-height, $max-height) {
+    @include media-gap($min-height, $max-height, 'height') { @content; }
+}
+
+//
+// Orientation (portrait/horizontal & landscape/vertical)
+//
+
+@mixin media-portrait {
+    @media (orientation: portrait) { @content; }
+}
+
+@mixin media-landscape {
+    @media (orientation: landscape) { @content; }
+}
+
+//
+// Media Queries for (High) resolution screen (like "retina" display)
+//
+
+$media-screen-default-dpi: 96 !default;
+$media-pixel-ratio-breakpoint: 1.5 !default;
+
+// Allow you to add some @content depending on the resolution of the screen.
+// Nice to change background image for highres screen.
+// (Specifying resolution using ddpx seems a nice idea (dots per px)
+// http://www.w3.org/TR/css3-values/#resolution )
+// $ratio dots per 'px' screen you want to scope
+// $minOrMax min or max resolution ?
+@mixin media-resolution($ratio: $media-pixel-ratio-breakpoint, $minOrMax: 'min') {
+	@media	(-webkit-#{$minOrMax}-device-pixel-ratio: $ratio),
+			(#{$minOrMax}-resolution: #{$media-screen-default-dpi*$ratio}dpi) {
+	// futur proof code
+	// @media only screen and (#{$minOrMax}-resolution: #{$ratio}dppx) {
+		// some hi-res css
+		@content;
+	}
+}
+
+// Allow you to add some @content depending on the pixel-ratio of the screen.
+// Nice to change background image for highres screen.
+// Prefer using media-resolution() for a shorter output with probably the same behavior.
+// $ratio dots per 'px' screen you want to scope
+// $minOrMax min or max resolution ?
+@mixin media-pixel-ratio($ratio: $media-pixel-ratio-breakpoint, $minOrMax: 'min') {
+	$fractionCoef: $ratio*2;
+	@media	(-webkit-#{$minOrMax}-device-pixel-ratio: $ratio),
+			(-moz-#{$minOrMax}-device-pixel-ratio: $ratio),
+			(-o-#{$minOrMax}-device-pixel-ratio: #{$fractionCoef}/2),
+			(#{$minOrMax}-device-pixel-ratio: $ratio) {
+		@content;
+	}
+}
+
+// media-resolution() shortcut
+// Allow you to add some @content for high resolution screen.
+// $ratio dots per 'px' screen you want to scope
+@mixin media-highres($ratio: $media-pixel-ratio-breakpoint) {
+	@include media-pixel-ratio($ratio, 'min') {
+		@content;
+	}
+}
+
+//
+// Media queries for javascript
+//
+// You can use this snippet
+// var size = window.getComputedStyle(document.body,':after').getPropertyValue('content');
+// if (size == 'widescreen') {
+//     // code for 'widescreen' !
+// }
+//
+@mixin media-queries-for-js($name, $media-queries) {
+	@media ($media-queries) {
+		body:after {
+			content: "#{$name}";
+			display: none;
+		}
+	}
+}
