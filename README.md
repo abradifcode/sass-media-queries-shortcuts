@@ -1,4 +1,4 @@
-# Media Shortcuts
+# Media Queries Shortcuts
 
 > Sass media queries shortcuts
 
@@ -6,16 +6,18 @@ A bundle of differents Sass media-queries shortcuts.
 
 ![Fonzie approved](https://dl.dropbox.com/u/14108185/Pictures/fonzie.jpg)
 
+---
+
 ## Installation
 
 ```
-fonzie install media-shortcuts
+fonzie install media-queries-shortcuts
 ```
 
 ## Usage
 
 ```scss
-@import "media-shortcuts";
+@import "media-queries-shortcuts";
 ```
 
 ```scss
@@ -75,9 +77,11 @@ if (size == 'widescreen') {
 }
 ```
 
+---
+
 ## License
 
-Copyright (c) 2012 Maxime Thirouin
+Copyright (c) 2013 Maxime Thirouin
 
 Released under [MIT Licence](http://moox.mit-license.org/)
 
