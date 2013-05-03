@@ -1,16 +1,10 @@
 {
-  "name": "media-queries-shortcuts",
+  "name": "sass-media-queries-shortcuts",
   "repo": "MoOx/sass-media-queries-shortcuts",
+  "version": "0.0.2",
   "description": "A bundle of Sass media queries shortcuts",
   "author": "Maxime Thirouin",
   "main": "media-queries-shortcuts.scss",
-  "version": "0.0.2",
   "dependencies": {},
-  "remotes": [
-    "http://fonzie.herokuapp.com/packages"
-  ],
-  "files": [
-    "media-queries-shortcuts.scss"
-  ],
   "license": "MIT"
 }
